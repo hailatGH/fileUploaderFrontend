@@ -4,20 +4,17 @@ import axios, { AxiosResponse } from "axios";
 import { Hero, UploadBtn, Table } from "../../components";
 import "./body.scss";
 
-interface Data {
-  key: string;
-  fileName: string;
-  fileSize: number;
-  updatedAt: string;
-}
-
 function Body() {
-  const [data, setData] = useState<Data | []>([]);
+  const [data, setData] = useState([]);
   const [upload, setUpload] = useState(false);
+
+  const onUpload = (): void => {
+    setUpload((prevUpload) => !prevUpload);
+  };
 
   const fetchData = async () => {
     try {
-      const response: AxiosResponse<Data> = await axios.get<Data>(
+      const response: AxiosResponse = await axios.get(
         "http://127.0.0.1:3000/file"
       );
 
@@ -27,21 +24,19 @@ function Body() {
     }
   };
 
-  console.log(data);
-
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [upload]);
 
   return (
     <div className="body">
       <div className="leftbody">
         <Hero />
-        <UploadBtn />
+        <UploadBtn onUpload={onUpload} />
       </div>
 
       <div className="rightBody">
-        <Table data={data} total={data ? [0]?.length : 0} />
+        <Table data={data} total={data.length} onUpload={onUpload} />
       </div>
     </div>
   );

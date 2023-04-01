@@ -1,24 +1,35 @@
 import { BsInboxFill } from "react-icons/Bs";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function UploadBtn() {
+const notify = (type: string, msg: string) => {
+  if (type === "success") toast.success(msg);
+  if (type === "error") toast.error(msg);
+};
+
+function UploadBtn(props: any) {
   const handleUpload = async (event: any) => {
     const formData = new FormData();
     formData.append("file", event.target.files[0]);
 
     try {
-      const response: AxiosResponse = await axios.post(
-        "http://127.0.0.1:3000/file",
-        formData,
-        {
+      await axios
+        .post("http://127.0.0.1:3000/file", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }
-      );
-      console.log(response.data);
+        })
+        .then(() => {
+          props.onUpload();
+          notify("success", `Succeed uploading!`);
+        })
+        .catch((error) => {
+          notify("error", `Failed uploading, ${error}`);
+        });
     } catch (error) {
-      console.error(error);
+      // console.error(error);
+      notify("error", `Failed uploading, ${error}`);
     }
   };
 
