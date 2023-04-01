@@ -1,0 +1,15 @@
+.header {
+  background-color: var(--primary-color);
+  height: 122px;
+  display: flex;
+  align-items: center;
+
+  .logoWraper {
+    background-color: red;
+    width: 290px;
+    height: 75px;
+    left: 33px;
+    top: 24px;
+    margin-left: 133px;
+  }
+}

@@ -1,0 +1,21 @@
+.footer {
+  background-color: var(--primary-color);
+  position: fixed;
+  bottom: 0;
+  height: 122px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .contactInfo {
+    margin-top: 10px;
+    font-size: 18px;
+
+    a {
+      text-decoration: none;
+      color: var(--gray-color);
+    }
+  }
+}
